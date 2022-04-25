@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port =process.env.PORT || 5000;
@@ -17,6 +18,18 @@ async function run(){
   try{
     await client.connect();
     const serviceCollection = client.db('geniusCar').collection('service')
+
+//AUTH
+app.post('/login' , async(req, res)=>{
+const user = req.body;
+const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{
+  expiresIn:'1d'
+})
+res.send({accessToken})
+})
+
+    //services api
+
     const orderCollection = client.db('geniusCar').collection('order')
     app.get('/service', async (req, res) => {///sobkhulu user ka nawar jonno
         const query = {}
