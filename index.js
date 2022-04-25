@@ -21,9 +21,9 @@ jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decoded)=>{
   }
   console.log('decoded',decoded);
   req.decoded = decoded
-})
-  console.log('inside verifyjwt',authHeader);
   next()
+})
+
 }
 
 
